@@ -1,0 +1,29 @@
+{
+  "name": "node-red-contrib-ipx800",
+  "version": "1.0.0",
+  "description": "A simple Node to communicate with IPX800 smart relays from GCE Electronics.",
+  "main": "ipx800.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frederic-bonjour/node-red-contrib-ipx800.git"
+  },
+  "keywords": [
+    "IPX800",
+    "domotics",
+    "relays"
+  ],
+  "author": "Frédéric Bonjour",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frederic-bonjour/node-red-contrib-ipx800/issues"
+  },
+  "homepage": "https://github.com/frederic-bonjour/node-red-contrib-ipx800#readme",
+  "node-red" : {
+    "nodes": {
+        "ipx800": "ipx800.js"
+    }
+  }
+}

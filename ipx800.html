@@ -1,0 +1,81 @@
+<script type="text/javascript">
+  RED.nodes.registerType('ipx800',{
+      category: 'config',
+      defaults: {
+          host: { value: "localhost", required: true },
+          apiKey: { value: "" },
+          name: { value: "" }
+      },
+      label: function() {
+        return this.name || this.host;
+      }
+  });
+
+  RED.nodes.registerType('ipx800 output',{
+      category: 'network',
+      color: 'pink',
+      defaults: {
+        ipx: {
+          type: 'ipx800',
+          required: true
+        },
+        output: {
+          value: 0,
+          required: true,
+          validate: RED.validators.number()
+        },
+        inverted: {
+          value: false,
+          //validate: RED.validators.boolean()
+        },
+        name: {
+          value: ''
+        },
+      },
+      inputs: 1,
+      outputs: 1,
+      icon: "fa-arrow-right",
+      label: function() {
+        return this.name ? `${this.name} (${this.output})` : `R${this.output}`;
+      }
+  });
+</script>
+
+<script type="text/html" data-template-name="ipx800">
+  <div class="form-row">
+      <label for="node-config-input-host">Host</label>
+      <input type="text" id="node-config-input-host" placeholder="IP address">
+  </div>
+  <div class="form-row">
+      <label for="node-config-input-apiKey">API key</label>
+      <input type="text" id="node-config-input-apiKey" placeholder="API key">
+  </div>
+  <div class="form-row">
+      <label for="node-config-input-name">Name</label>
+      <input type="text" id="node-config-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="ipx800 output">
+  <p>A simple node that represents an output (relay) on an IPX800 device.</p>
+</script>
+
+<script type="text/html" data-template-name="ipx800 output">
+  <div class="form-row">
+      <label for="node-input-ipx">IPX</label>
+      <input type="text" id="node-input-ipx">
+  </div>
+  <div class="form-row">
+    <label for="node-input-output">Output number</label>
+    <input type="text" id="node-input-output" placeholder="Output number">
+  </div>
+  <div class="form-row">
+    <label for="node-input-inverted">Inverted?</label>
+    <input type="checkbox" id="node-input-inverted">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
