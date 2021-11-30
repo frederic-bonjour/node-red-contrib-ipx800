@@ -2,35 +2,21 @@ module.exports = function(RED) {
 
   const http = require('http');
 
-  function IPX800Node(config) {
-    RED.nodes.createNode(this, config);
-    this.host = config.host;
-    this.apiKey = config.apiKey;
-  }
-  RED.nodes.registerType("ipx800", IPX800Node, {
-    credentials: {
-      apiKey: { type: 'text' }
-    }
-  });
-
-
-  function IPX800Output(config) {
+  function IPX800Dimmer(config) {
     RED.nodes.createNode(this, config);
 
     const IPX = RED.nodes.getNode(config.ipx);
     const URL = `http://${IPX.host}/api/xdevices.json?${IPX.apiKey ? 'key=' + IPX.apiKey + '&' : ''}`;
 
     this.on('input', async (msg, send, done) => {
-      let val = msg.payload;
-      let output = msg.output || config.output;
-      if (!output) {
-        this.status({ text: `undefined output`, fill: 'red', shape: 'square' });
+      let val = msg.payload !== undefined ? msg.payload : config.level;
+      let channel = msg.channel || config.channel;
+      if (!channel) {
+        this.status({ text: `undefined channel`, fill: 'red', shape: 'square' });
         done();
         return;
       }
-      if (Array.isArray(output)) output = output.join(',')
-      if (config.inverted) val = !val;
-      let qs = `${val ? 'SetR' : 'ClearR'}=${output}`;
+      let qs = `Set010v=1&010vCha=${channel}&010vValue=${val}`;
       console.log('IPX800', 'URL=', qs);
       this.status({ text: `sending ${qs}...` });
       http.get(`${URL}${qs}`, (resp) => {
@@ -42,12 +28,12 @@ module.exports = function(RED) {
         });
 
         // The whole response has been received. Print out the result.
-        resp.on('end', () => {console.log('resp:', data);
+        resp.on('end', () => {
           const json = JSON.parse(data);
           this.status({
             shape: "dot",
-            fill: msg.payload ? "green" : "grey",
-            text: 'R' + output + (msg.payload ? ': on' : ': off')
+            fill: val ? "green" : "grey",
+            text: `C${channel}: ${val}%`
           });
           send({ payload: json });
           if (done) done();
@@ -62,5 +48,5 @@ module.exports = function(RED) {
     });
   }
 
-  RED.nodes.registerType("ipx800 output", IPX800Output);
+  RED.nodes.registerType("ipx800 dimmer", IPX800Dimmer);
 };

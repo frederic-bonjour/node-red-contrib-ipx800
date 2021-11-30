@@ -1,0 +1,55 @@
+<script type="text/javascript">
+  RED.nodes.registerType('ipx800 dimmer',{
+      category: 'network',
+      color: 'pink',
+      defaults: {
+        ipx: {
+          type: 'ipx800',
+          required: true
+        },
+        channel: {
+          value: 1,
+        },
+        level: {
+          value: 50
+        },
+        name: {
+          value: ''
+        },
+      },
+      inputs: 1,
+      outputs: 0,
+      icon: "fa-light",
+      label: function() {
+        if (this.channel) { 
+          return this.name ? `${this.name} (C${this.channel})` : `C${this.channel}`;
+        } else {
+          return this.name ? `${this.name} C?` : `C?`;
+        }
+      }
+  });
+</script>
+
+<script type="text/html" data-help-name="ipx800 dimmer">
+  <p>A simple node that represents a dimmer extension on an IPX800 device.</p>
+</script>
+
+<script type="text/html" data-template-name="ipx800 dimmer">
+  <div class="form-row">
+      <label for="node-input-ipx">IPX</label>
+      <input type="text" id="node-input-ipx">
+  </div>
+  <div class="form-row">
+    <label for="node-input-channel">Channel</label>
+    <input type="text" id="node-input-channel" placeholder="Channel number">
+  </div>
+  <div class="form-row">
+    <label for="node-input-level">Level</label>
+    <input type="text" id="node-input-level" placeholder="%">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+

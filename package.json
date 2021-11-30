@@ -21,9 +21,10 @@
     "url": "https://github.com/frederic-bonjour/node-red-contrib-ipx800/issues"
   },
   "homepage": "https://github.com/frederic-bonjour/node-red-contrib-ipx800#readme",
-  "node-red" : {
+  "node-red": {
     "nodes": {
-        "ipx800": "ipx800.js"
+      "ipx800": "ipx800.js",
+      "ipx800-dimmer": "ipx800-dimmer.js"
     }
   }
 }
